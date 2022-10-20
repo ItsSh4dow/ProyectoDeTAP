@@ -6,47 +6,74 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 
-public class Cajero extends JFrame{
-    private JButton corte, configuracion,inventario, ayuda, buscarProd, cambiar, eliminar, cobrar, reinprimir, salir, ventasDelDia;
+public class Admin extends JFrame{
+    private JButton buscarProd, cambiar, eliminar, cobrar, reinprimir, ventasDelDia;
     private JLabel ventaProductos, codigoProducto, total, PagoCon, cambio, CodigoBarras,
-            nombreDelProducto, precioDelProducto, cantidad, importe, existencia, campoVacioBoton, campoVacio2, campoVacio3, campovacio4, derechos;
+            nombreDelProducto, precioDelProducto, cantidad, importe, existencia, campoVacio2, campoVacio3, campovacio4, derechos;
     private JTextField codigoDelProducuto, totalPagar, pago, cam;
     private JPanel panelAlto, panel2, panel3, panel4, panel5, panel6, panel7,panel8, panel9;
     private JList espacio1, espacio2, espacio3, espacio4, espacio5, espacio6;
+    private JMenuBar menuBar;
+    private JMenu corte, configuracion, inventario, ayuda, herramientasAdmin, salir;
+    private JMenuItem agregarVendedor, deshabilitarVendedor;
 
-    public Cajero (){
+    public Admin (){
         super("ChikiStore");
         setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         panelAlto = new JPanel ();
-        corte = new JButton ("Corte");
-        configuracion= new JButton ("Configuracion");
-        inventario= new JButton("Inventario");
-        ayuda = new JButton("Ayuda");
-        campoVacioBoton = new JLabel("                                                                                                ");
-        salir = new JButton("Salir");
-        panelAlto.add(corte);
-        panelAlto.add(configuracion);
-        panelAlto.add(inventario);
-        panelAlto.add(ayuda);
-        panelAlto.add(campoVacioBoton);
-        panelAlto.add(salir);
+        menuBar = new JMenuBar();
+
+        setJMenuBar(menuBar);
+        // Cambiamos la fuente las opciones del menu
+        corte = new JMenu("Corte");
+        corte.setFont(new Font("Arial", Font.PLAIN, 12));
+        configuracion = new JMenu("Configuracion");
+        configuracion.setFont(new Font("Arial", Font.PLAIN, 12));
+        inventario = new JMenu("Inventario");
+        inventario.setFont(new Font("Arial", Font.PLAIN, 12));
+        ayuda = new JMenu("Ayuda");
+        ayuda.setFont(new Font("Arial", Font.PLAIN, 12));
+        herramientasAdmin = new JMenu("Herramientas");
+        herramientasAdmin.setFont(new Font("Arial", Font.PLAIN, 12));
+        salir = new JMenu("Salir");
+
+        //add the sub menu
+        agregarVendedor = new JMenuItem("Agregar Vendedor");
+        deshabilitarVendedor = new JMenuItem("Desabilitar Vendedor");
+        herramientasAdmin.add(agregarVendedor);
+        herramientasAdmin.add(deshabilitarVendedor);
+
+        // Add all the configurations of the menu
+        menuBar.add(corte);
+        menuBar.add(configuracion);
+        menuBar.add(inventario);
+        menuBar.add(ayuda);
+        menuBar.add(herramientasAdmin);
+        menuBar.add(salir);
+        panelAlto.add(menuBar);
+        // The panel with the menu to JFrame
         add(panelAlto);
         panelAlto.setLayout(new FlowLayout(FlowLayout.LEADING));
 
         panel2=new JPanel();
         panel2.setBackground(Color.CYAN);
         ventaProductos = new JLabel("Venta de Productos");
+        panel2.add(Box.createRigidArea(new Dimension(300,0)));
         panel2.add(ventaProductos);
         add(panel2);
         panel2.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -63,17 +90,25 @@ public class Cajero extends JFrame{
         panel3.setLayout(new FlowLayout(FlowLayout.LEADING));
 
         panel4 = new JPanel();
-        CodigoBarras = new JLabel("Codigo de barras       ");
-        nombreDelProducto= new JLabel("nombre del producto       ");
-        precioDelProducto = new JLabel("Precio del producto       ");
-        cantidad = new JLabel("Cantidad        ");
-        importe= new JLabel("Importe       ");
-        existencia = new JLabel("Existencia  ");
+        // Instance of all the Labels
+        CodigoBarras = new JLabel("Codigo de barras");
+        nombreDelProducto= new JLabel("Nombre del producto");
+        precioDelProducto = new JLabel("Precio del producto");
+        cantidad = new JLabel("Cantidad");
+        importe= new JLabel("Importe");
+        existencia = new JLabel("Existencia");
+        //  Give dimensions for what are in the middle
+        panel4.add(Box.createRigidArea(new Dimension(7,30)));
         panel4.add(CodigoBarras);
+        panel4.add(Box.createRigidArea(new Dimension(20,0)));
         panel4.add(nombreDelProducto);
+        panel4.add(Box.createRigidArea(new Dimension(16,0)));
         panel4.add(precioDelProducto);
+        panel4.add(Box.createRigidArea(new Dimension(25,0)));
         panel4.add(cantidad);
+        panel4.add(Box.createRigidArea(new Dimension(23,0)));
         panel4.add(importe);
+        panel4.add(Box.createRigidArea(new Dimension(55,0)));
         panel4.add(existencia);
         add(panel4);
         panel4.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -129,6 +164,7 @@ public class Cajero extends JFrame{
         panel5.setLayout(new FlowLayout(FlowLayout.LEADING));
 
         panel6 = new JPanel();
+        // Set de dimensions of all the buttons and add the panel 6
         ventaProductos = new JLabel("Venta de productos: ");
         campoVacio2=new JLabel("                                                                                                         ");
         cobrar= new JButton("Cobrar");
@@ -172,11 +208,10 @@ public class Cajero extends JFrame{
         ventasDelDia= new JButton("Ventas del Dia");
         ventasDelDia.setHorizontalAlignment(SwingConstants.CENTER);
         ventasDelDia.setPreferredSize(new Dimension(120,30));
-        panel8.add(Box.createRigidArea(new Dimension(4,0)));
         panel8.add(PagoCon);
-        panel8.add(Box.createRigidArea(new Dimension(25,0)));
+        panel8.add(Box.createRigidArea(new Dimension(30,0)));
         panel8.add(cambio);
-        panel8.add(Box.createRigidArea(new Dimension(2,0)));
+        panel8.add(Box.createRigidArea(new Dimension(1,0)));
         panel8.add(ventasDelDia);
         add(panel8);
         panel8.setLayout(new FlowLayout(FlowLayout.LEADING));
@@ -197,8 +232,8 @@ public class Cajero extends JFrame{
         derechos = new JLabel("Chikilines Store M.R. todos los derechos reservados :)))");
         add(derechos, BorderLayout.SOUTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
         pack();
-
+        setLocation(300,80);
     }
 }
-
